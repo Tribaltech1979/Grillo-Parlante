@@ -44,6 +44,7 @@ public class MainActivity extends Activity  {
     public class myJavaScriptInterface implements OnInitListener{
     	
     	Context mContext;
+    	boolean TtsInitOk = false;
     	
     	myJavaScriptInterface(Context c){
     		mContext = c;
@@ -54,15 +55,27 @@ public class MainActivity extends Activity  {
     		if(status != TextToSpeech.ERROR){
                 ttobj.setLanguage(Locale.ITALY);
                }
-    		
+    		if (status == TextToSpeech.SUCCESS){
+    			this.TtsInitOk = true;
+    		}
     	}
 
     	
     	@JavascriptInterface
     	public void parla(String frase){
-    		ttobj = new TextToSpeech(mContext , this);
     		
-    		ttobj.speak(frase, TextToSpeech.QUEUE_FLUSH, null);
+    		
+    		if (ttobj == null){
+    			ttobj = new TextToSpeech(mContext , this);
+    		}
+    		
+    		
+    		if (this.TtsInitOk){
+    			ttobj.speak(frase, TextToSpeech.QUEUE_FLUSH, null);
+    		}
+    		else {
+    			Toast.makeText(mContext, "TTS Error", Toast.LENGTH_SHORT).show();
+    		}
     		
     	}
     	
