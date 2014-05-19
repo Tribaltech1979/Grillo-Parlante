@@ -15,6 +15,12 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+
 public class MainActivity extends Activity  {
 	
 	TextToSpeech ttobj;
@@ -35,9 +41,26 @@ public class MainActivity extends Activity  {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+    	switch (item.getItemId())
+        {
+        	case R.id.Preferences:
+        		Toast.makeText(this, "Preferences is Selected", Toast.LENGTH_SHORT).show();
+            return true;
+    		default:
+    		return true;
+        }
+    	
+    	
+    //	return true;
+    	
     }
     
     
