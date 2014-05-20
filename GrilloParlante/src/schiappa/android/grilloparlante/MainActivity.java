@@ -3,6 +3,7 @@ package schiappa.android.grilloparlante;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Menu;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -53,6 +54,7 @@ public class MainActivity extends Activity  {
         {
         	case R.id.Preferences:
         		Toast.makeText(this, "Preferences is Selected", Toast.LENGTH_SHORT).show();
+        		this.showOptions();
             return true;
     		default:
     		return true;
@@ -64,7 +66,13 @@ public class MainActivity extends Activity  {
     }
     
     
-    public class myJavaScriptInterface implements OnInitListener{
+    private void showOptions() {
+    	  Intent intent = new Intent(this, SettingsActivity.class);
+    	  startActivity(intent);
+	}
+
+
+	public class myJavaScriptInterface implements OnInitListener{
     	
     	Context mContext;
     	boolean TtsInitOk = false;
