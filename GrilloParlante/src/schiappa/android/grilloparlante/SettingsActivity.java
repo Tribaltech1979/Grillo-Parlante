@@ -2,12 +2,15 @@ package schiappa.android.grilloparlante;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -30,7 +33,11 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements
+OnSharedPreferenceChangeListener {
+	
+
+	
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown
@@ -44,6 +51,11 @@ public class SettingsActivity extends PreferenceActivity {
 		super.onPostCreate(savedInstanceState);
 
 		setupSimplePreferencesScreen();
+		
+	    // show the current value in the settings screen
+	    for (int i = 0; i < getPreferenceScreen().getPreferenceCount(); i++) {
+	      initSummary(getPreferenceScreen().getPreference(i));
+	    }
 	}
 
 	/**
@@ -55,7 +67,7 @@ public class SettingsActivity extends PreferenceActivity {
 		if (!isSimplePreferences(this)) {
 			return;
 		}
-
+/*
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
 
@@ -81,6 +93,10 @@ public class SettingsActivity extends PreferenceActivity {
 		bindPreferenceSummaryToValue(findPreference("example_list"));
 		bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
 		bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+		*/
+		addPreferencesFromResource(R.xml.pref_voice);
+		bindPreferenceSummaryToValue(findPreference("pref_voice_list"));
+		
 	}
 
 	/** {@inheritDoc} */
@@ -198,7 +214,18 @@ public class SettingsActivity extends PreferenceActivity {
 	 * This fragment shows general preferences only. It is used when the
 	 * activity is showing a two-pane settings UI.
 	 */
+	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public static class VoicePreferencesFragment extends PreferenceFragment{
+		@Override
+		public void onCreate(Bundle savedInstanceState){
+			super.onCreate(savedInstanceState);
+			addPreferencesFromResource(R.xml.pref_voice);
+			
+			bindPreferenceSummaryToValue(findPreference("pref_voice_list"));
+		}
+	}
+	/*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class GeneralPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -218,7 +245,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * This fragment shows notification preferences only. It is used when the
 	 * activity is showing a two-pane settings UI.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	/*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class NotificationPreferenceFragment extends
 			PreferenceFragment {
 		@Override
@@ -238,7 +265,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * This fragment shows data and sync preferences only. It is used when the
 	 * activity is showing a two-pane settings UI.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	/*@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public static class DataSyncPreferenceFragment extends PreferenceFragment {
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
@@ -252,4 +279,30 @@ public class SettingsActivity extends PreferenceActivity {
 			bindPreferenceSummaryToValue(findPreference("sync_frequency"));
 		}
 	}
+	*/
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences arg0, String key) {
+		updatePreferences(findPreference(key));
+		
+	}
+	
+	
+	 private void initSummary(Preference p) {
+		    if (p instanceof PreferenceCategory) {
+		      PreferenceCategory cat = (PreferenceCategory) p;
+		      for (int i = 0; i < cat.getPreferenceCount(); i++) {
+		        initSummary(cat.getPreference(i));
+		      }
+		    } else {
+		      updatePreferences(p);
+		    }
+		  }
+	 
+	 private void updatePreferences(Preference p) {
+		    if (p instanceof EditTextPreference) {
+		      EditTextPreference editTextPref = (EditTextPreference) p;
+		      p.setSummary(editTextPref.getText());
+		    }
+		  }
 }
