@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -85,10 +86,12 @@ public class MainActivity extends Activity  {
     	
     	myJavaScriptInterface(Context c){
     		mContext = c;
+    		Log.w("Voice", "constr :"+this.loc+" "+this.voiceEnabled+" "+this.speechRate);
     	}
     	
     	@Override
     	public void onInit(int status) {
+    	//	Log.w("Voice", "onInit1 :"+this.loc+" "+this.voiceEnabled+" "+this.speechRate);
     		if(status != TextToSpeech.ERROR){
     			SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this.mContext);
     			this.loc = settings.getString("pref_voice_list", Locale.getDefault().toString());
@@ -98,6 +101,7 @@ public class MainActivity extends Activity  {
     			}catch (NumberFormatException e){
     				
     			}
+    			Log.w("Voice", "onInit :"+this.loc+" "+this.voiceEnabled+" "+this.speechRate);
                 ttobj.setLanguage(new Locale(this.loc));
                 ttobj.setSpeechRate(this.speechRate);
                }
@@ -110,6 +114,7 @@ public class MainActivity extends Activity  {
     	@JavascriptInterface
     	public void parla(String frase){
 
+    		Log.w("Voice", "parla "+this.loc+" "+this.voiceEnabled+" "+this.speechRate);
     		if (this.voiceEnabled){
     		
 	    		if (ttobj == null){
@@ -149,6 +154,7 @@ public class MainActivity extends Activity  {
 		@Override
 		public void onSharedPreferenceChanged(
 				SharedPreferences sharedPreferences, String key) {
+			Log.w("Voice", "onChange "+this.loc+" "+this.voiceEnabled+" "+this.speechRate);
 			this.loc = sharedPreferences.getString("pref_voice_list", Locale.getDefault().toString());
 			this.voiceEnabled = sharedPreferences.getBoolean("voice_checkbox", true);
 			

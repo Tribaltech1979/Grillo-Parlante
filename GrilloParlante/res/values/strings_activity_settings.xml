@@ -81,6 +81,7 @@
         <item>Normal</item>
         <item>Fast</item>
     </string-array>
-        
+    
+    <string name="pref_voice_speech_messages">Voice Speed</string>
     
 </resources>

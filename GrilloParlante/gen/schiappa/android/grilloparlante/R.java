@@ -13,6 +13,8 @@ public final class R {
         public static final int pref_example_list_values=0x7f070001;
         public static final int pref_sync_frequency_titles=0x7f070002;
         public static final int pref_sync_frequency_values=0x7f070003;
+        public static final int pref_voice_speech_titles=0x7f070007;
+        public static final int pref_voice_speech_values=0x7f070006;
         public static final int pref_voice_titles=0x7f070005;
         public static final int pref_voice_values=0x7f070004;
     }
@@ -69,6 +71,7 @@ public final class R {
         public static final int pref_title_system_sync_settings=0x7f06000e;
         public static final int pref_title_vibrate=0x7f060013;
         public static final int pref_voice_list_title=0x7f060014;
+        public static final int pref_voice_speech_messages=0x7f060015;
         public static final int pref_voice_title=0x7f06000b;
         public static final int title_activity_settings=0x7f060004;
     }
