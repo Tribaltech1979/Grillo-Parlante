@@ -59,9 +59,9 @@
     
     <string name="pref_voice_list_title">Language Settings</string>
     <string-array name="pref_voice_values">
-        <item>ITA</item>
-        <item>UK</item>
-        <item>RUS</item>
+        <item>ita_ITA</item>
+        <item>en_UK</item>
+        <item>rus_RUS</item>
     </string-array>
 
         <string-array name="pref_voice_titles">
@@ -71,7 +71,7 @@
     </string-array>
     
     <string-array name="pref_voice_speech_values">
-        <item>0,5</item>
+        <item>0.5</item>
         <item>1</item>
         <item>2</item>
     </string-array>

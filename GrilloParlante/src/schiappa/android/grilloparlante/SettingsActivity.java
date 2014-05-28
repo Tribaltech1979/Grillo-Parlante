@@ -96,7 +96,7 @@ OnSharedPreferenceChangeListener {
 		*/
 		addPreferencesFromResource(R.xml.pref_voice);
 		bindPreferenceSummaryToValue(findPreference("pref_voice_list"));
-		
+		bindPreferenceSummaryToValue(findPreference("pref_voice_speech"));
 	}
 
 	/** {@inheritDoc} */
